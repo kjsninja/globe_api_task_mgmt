@@ -1,11 +1,13 @@
 const express = require('express');
 const config = require('./config/config')
+
 const app = express()
 
+app.use('/api', require('./routes'))
 
-app.get('/', (req, res)=>{
-  res.send({
-    message: 'Hello World'
+app.use((req, res)=>{
+  res.status(404).send({
+    message: 'Page not found!'
   })
 })
 
