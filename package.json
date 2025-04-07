@@ -1,0 +1,20 @@
+{
+  "name": "task-mgmt-api",
+  "version": "1.0.0",
+  "description": "This is a simple task management backend service",
+  "license": "MIT",
+  "author": "Ken Crucillo",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "prisma": "^6.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
