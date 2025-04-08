@@ -29,8 +29,9 @@ const users = faker.helpers.multiple(createUsers, {
   count: 10
 });
 
-console.log('Creating 10 users...');
+console.log('Seed start...');
 users.forEach(async user=>{
+  console.log(`Creating user ${user.email}...`);
   const userResult = await db.user.create({
     data: user
   });
@@ -42,11 +43,10 @@ users.forEach(async user=>{
     return e;
   })
 
-  console.log('Creating 5 session per user...');
+  console.log(`Creating 5 session for user ${user.email}...`);
   await db.userSession.createMany({
     data: sessions
   })
-  console.log('Done in session creation...')
 
   const tasks = faker.helpers.multiple(createTasks, {
     count: 10
@@ -55,11 +55,10 @@ users.forEach(async user=>{
     return e;
   })
 
-  console.log('Creating 10 tasks per user...');
+  console.log(`Creating 10 tasks for user ${user.email}...`);
   await db.task.createMany({
     data: tasks
   })
-  console.log('Done in task creation...')
 });
 
-console.log('Done in users creation...');
+console.log('Done...');
