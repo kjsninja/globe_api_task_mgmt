@@ -10,8 +10,7 @@ const checkPrismaError = function(error){
     case "P2025":
       return {
         error: {
-          message: error.meta.cause,
-          field: null
+          message: error.meta.cause
         }
       }
     default:
