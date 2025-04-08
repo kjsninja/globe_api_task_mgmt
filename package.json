@@ -7,14 +7,17 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "migrate": "npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "prisma": "^6.5.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
-const config = require('../config/config');
+const config = require('../config');
 
 
 const log = ['warn', 'error'];

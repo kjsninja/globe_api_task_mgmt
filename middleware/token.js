@@ -1,0 +1,29 @@
+const JWT = require('../helper/jwt');
+const User = require('../models/Users');
+
+module.exports = {
+    isValidToken : async (req, res, next)=>{
+        if(!req.headers.authorization){
+            res.status(401).send({
+                message: 'Unauthorize'
+            })
+        }
+        if(req.headers.authorization.indexOf("Bearer ") > -1){
+            const token = req.headers.authorization.replace("Bearer ", "");
+            const verify = JWT.verify(token);
+            if(verify){
+                res.locals.token = verify
+                res.locals.user = await User.getUserSessionById(verify.id);
+                next();
+            }else{
+                res.status(401).send({
+                    message: "Token expired or invalid"
+                })
+            }
+        }else{
+            res.status(401).send({
+                message: 'Unauthorize'
+            })
+        }
+    }
+};

@@ -1,15 +1,15 @@
 const prisma = require('../helper/db');
 const { checkPrismaError } = require('../helper/prismaErrors');
-
+const { syncGeneratePassword, syncValidatePassword } = require('../helper/password')
+const jwt = require('../helper/jwt');
 class Users{
-  // TODO: needs to hash the password using some encryption
   async create({ email, name, password } = createBody){
     try{
       return await prisma.user.create({
         data: {
           email,
           name,
-          password_hash: password
+          password_hash: syncGeneratePassword(password)
         }
       })
     }catch(e){
@@ -49,6 +49,70 @@ class Users{
       });
     }catch(e){
       return checkPrismaError(e);
+    }
+  }
+
+  // USER SESSIONS
+
+  async getAllUserSessions(owner){
+    return await prisma.userSession.findMany({
+      where: {
+        owner
+      }
+    })
+  }
+
+  async getUserSessionById(sessionId){
+    const user = await prisma.userSession.findFirstOrThrow({
+      where: {
+        id: sessionId
+      }
+    })
+    const userDetails = await this.getUserById(user.owner);
+    return {
+      id: userDetails.id,
+      email: userDetails.email,
+      name: userDetails.name
+    }
+  }
+
+  async deleteUserSessionById(sessionId){
+    try{
+      return await prisma.userSession.delete({
+        where: {
+          id: sessionId
+        }
+      });
+    }catch(e){
+      return checkPrismaError(e);
+    }
+  }
+
+  async getUserByEmailPassword({ email, password } = findBody, userAgent = ''){
+    const user = await prisma.user.findFirstOrThrow({
+      where: {
+        email
+      }
+    })
+    // if user found
+    if(user){
+      // check if password is correct
+      if(syncValidatePassword(password, user.password_hash)){
+
+        // create session in db
+        const userSession = await prisma.userSession.create({
+          data: {
+            owner: user.id,
+            metadata: JSON.stringify({
+              agent: userAgent
+            })
+          }
+        })
+        // return the jwt token
+        return jwt.generate({
+          id: userSession.id
+        }, 3600)
+      }
     }
   }
 }

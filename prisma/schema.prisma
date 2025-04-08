@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,32 +8,40 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String @unique
-  name String @db.VarChar(100)
-  password_hash String @db.VarChar(100)
-  createdAt DateTime @default(now())
-
-  tasks Task[]
-  sessions UserSession[]
+  id            String        @id @default(uuid())
+  email         String        @unique
+  name          String        @db.VarChar(100)
+  password_hash String        @db.VarChar(100)
+  createdAt     DateTime      @default(now())
+  tasks         Task[]
+  sessions      UserSession[]
 }
 
-// When user logs in, create a record here
 model UserSession {
-  id String @id @default(uuid())
-  user_id User @relation(fields: [owner], references: [id]) 
-  owner String
-  metadata String? @db.Text()
+  id        String   @id @default(uuid())
+  owner     String
+  metadata  String?
   createdAt DateTime @default(now())
+  user_id   User     @relation(fields: [owner], references: [id], onDelete: Cascade)
+
+  @@index([owner])
 }
 
 model Task {
-  id String @id @default(uuid())
-  user_id User @relation(fields: [owner], references: [id])
-  title String @db.VarChar(50)
-  content String? @db.Text()
-  owner String
+  id        String     @id @default(uuid())
+  title     String     @db.VarChar(50)
+  content   String?
+  owner     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  status    TaskStatus @default(PENDING)
+  user_id   User       @relation(fields: [owner], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([id, owner])
+  @@index([owner])
+}
+
+enum TaskStatus {
+  PENDING   @map("0")
+  COMPLETED @map("1")
 }
