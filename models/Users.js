@@ -93,7 +93,7 @@ class Users{
   }
 
   async getUserByEmailPassword({ email, password } = findBody, userAgent = ''){
-    const user = await prisma.user.findFirstOrThrow({
+    const user = await prisma.user.findFirst({
       where: {
         email
       }
@@ -117,6 +117,8 @@ class Users{
           id: userSession.id
         }, 3600)
       }
+    }else {
+      return null
     }
   }
 }

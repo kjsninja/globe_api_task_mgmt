@@ -1,22 +1,25 @@
 const joi = require('joi');
-const { joiValidate } = require('../../../helper/requestValidator')
+const { joiValidate } = require('../../../helper/requestValidator');
+const { TaskStatus } = require('@prisma/client');
 
-const CreateUserDTO = joi.object({
-  email: joi.string().email().max(100),
-  name: joi.string().alphanum().min(2).max(100)
+const CreateTaskDTO = joi.object({
+  title: joi.string().min(1).max(50),
+  content: joi.string().min(1).max(500)
 })
 
-const UpdateUserDTO = joi.object({
-  name: joi.string().alphanum().min(2).max(100)
+const UpdateTaskDTO = joi.object({
+  title: joi.string().min(1).max(50).optional(),
+  content: joi.string().min(1).max(500).optional(),
+  status: joi.string().valid(TaskStatus.COMPLETED, TaskStatus.PENDING).optional()
 });
 
 const checkCreateRequest = function(req, res, next){
-  const validate = CreateUserDTO.validate(req.body);
+  const validate = CreateTaskDTO.validate(req.body);
   joiValidate(validate, req, res, next);
 }
 
 const checkUpdateRequest = function(req, res, next){
-  const validate = UpdateUserDTO.validate(req.body);
+  const validate = UpdateTaskDTO.validate(req.body);
   joiValidate(validate, req, res, next);
 }
 

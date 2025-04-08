@@ -33,7 +33,7 @@ class Tasks{
     }
   }
 
-  async updateTask(id, owner, {title, content}= updateBody) {
+  async updateTask(id, owner, {title, content, status}= updateBody) {
     try{
       return await prisma.task.update({
         where: {
@@ -42,7 +42,8 @@ class Tasks{
         },
         data: {
           title,
-          content
+          content,
+          status
         }
       })
     }catch(e){
@@ -51,7 +52,7 @@ class Tasks{
   }
 
   async getTaskById(id, owner){
-    return await prisma.task.findFirstOrThrow({
+    return await prisma.task.findFirst({
       where: {
         id,
         owner
