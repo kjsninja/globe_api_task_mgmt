@@ -1,5 +1,4 @@
 const checkPrismaError = function(error){
-  console.log(error);
   switch(error.code){
     case "P2002":
       return {

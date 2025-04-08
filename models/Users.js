@@ -63,16 +63,20 @@ class Users{
   }
 
   async getUserSessionById(sessionId){
-    const user = await prisma.userSession.findFirstOrThrow({
-      where: {
-        id: sessionId
+    try{
+      const user = await prisma.userSession.findFirstOrThrow({
+        where: {
+          id: sessionId
+        }
+      })
+      const userDetails = await this.getUserById(user.owner);
+      return {
+        id: userDetails.id,
+        email: userDetails.email,
+        name: userDetails.name
       }
-    })
-    const userDetails = await this.getUserById(user.owner);
-    return {
-      id: userDetails.id,
-      email: userDetails.email,
-      name: userDetails.name
+    }catch(e){
+      return checkPrismaError(e);
     }
   }
 
