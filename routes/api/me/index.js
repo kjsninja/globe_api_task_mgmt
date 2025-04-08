@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const User = require('../../../models/Users');
 const { checkUpdateRequest } = require('../users/dto')
+const { checkBlankBody } = require('../common-dto')
 
 // other routes
 router.use('/tasks', require('../tasks'));
@@ -30,7 +31,7 @@ router.delete('/', async (req, res)=> {
 });
 
 // update tasks by id
-router.put('/', [checkUpdateRequest], async (req, res) => {
+router.put('/', [checkBlankBody, checkUpdateRequest], async (req, res) => {
   const result = await User.updateUser(res.locals.user.id, req.body);
   if(result.error){
     return res.status(400).send({

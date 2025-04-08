@@ -17,7 +17,7 @@ const checkPrismaError = function(error){
       return {
         error: {
           message: "There is problem with your request.",
-          field: error.meta.target
+          error: error
         }
       }
   }

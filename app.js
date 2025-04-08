@@ -1,10 +1,10 @@
 const express = require('express');
-const config = require('./config');
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(function(req, res, next) {
   res.locals.userAgent = req.get('User-Agent');
@@ -20,7 +20,4 @@ app.use((req, res)=>{
   })
 })
 
-app.listen(config.PORT, ()=>{
-  console.log(`Listening to port...http://localhost:${config.PORT}`)
-})
-
+module.exports = app;

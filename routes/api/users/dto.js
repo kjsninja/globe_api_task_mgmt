@@ -3,7 +3,7 @@ const { joiValidate } = require('../../../helper/requestValidator')
 
 const CreateUserDTO = joi.object({
   email: joi.string().email().max(100),
-  name: joi.string().alphanum().min(2).max(100),
+  name: joi.string().min(2).max(100),
   password: joi.string().custom((value, helper) => {
     const errors = [];
     if(value.length < 8 || value.length > 30){
@@ -31,7 +31,7 @@ const CreateUserDTO = joi.object({
 })
 
 const UpdateUserDTO = joi.object({
-  name: joi.string().alphanum().min(2).max(100)
+  name: joi.string().min(2).max(100)
 });
 
 const checkCreateRequest = function(req, res, next){

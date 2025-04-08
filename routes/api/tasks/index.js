@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Tasks = require('../../../models/Tasks')
 const { checkCreateRequest, checkUpdateRequest } = require('./dto')
-const { checkUUIDparams } = require('../common-dto')
+const { checkUUIDparams, checkBlankBody } = require('../common-dto')
 
 // create
 router.post('/', checkCreateRequest, async (req, res)=> {
@@ -41,9 +41,10 @@ router.delete('/:id', checkUUIDparams, async(req, res)=> {
 });
 
 // update tasks by id
-router.put('/:id', [checkUUIDparams, checkUpdateRequest], async (req, res)=> {
+router.put('/:id', [checkUUIDparams, checkBlankBody, checkUpdateRequest], async (req, res)=> {
   const result = await Tasks.updateTask(req.params.id, res.locals.user.id, req.body);
   if(result.error) res.status(400);
+  delete result.owner;
   res.send(result)
 })
 
