@@ -10,8 +10,11 @@
     "dev": "nodemon app.js"
   },
   "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "body-parser": "^2.2.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "joi": "^17.13.3",
     "prisma": "^6.5.0"
   },
   "devDependencies": {

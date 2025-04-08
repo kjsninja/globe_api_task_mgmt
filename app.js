@@ -1,7 +1,10 @@
 const express = require('express');
-const config = require('./config/config')
+const config = require('./config/config');
+const bodyParser = require('body-parser');
 
-const app = express()
+const app = express();
+
+app.use(bodyParser.json());
 
 app.use('/api', require('./routes'))
 
