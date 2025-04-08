@@ -80,13 +80,33 @@ class Users{
     }
   }
 
-  async deleteUserSessionById(sessionId){
+  async getUserSessionByIdAndOwner(sessionId, owner){
     try{
-      return await prisma.userSession.delete({
+      const session = await prisma.userSession.findFirstOrThrow({
         where: {
-          id: sessionId
+          id: sessionId,
+          owner
+        }
+      })
+      delete session.owner;
+      session.metadata = JSON.parse(session.metadata);
+      return session
+    }catch(e){
+      return checkPrismaError(e);
+    }
+  }
+
+  async deleteUserSessionById(sessionId, owner){
+    try{
+      const session = await prisma.userSession.delete({
+        where: {
+          id: sessionId,
+          owner
         }
       });
+      delete session.owner;
+      session.metadata = JSON.parse(session.metadata);
+      return session;
     }catch(e){
       return checkPrismaError(e);
     }

@@ -3,8 +3,9 @@ const router = express.Router({mergeParams: true});
 const User = require('../../../models/Users');
 const { checkUpdateRequest } = require('../users/dto')
 
-// tasks routes
+// other routes
 router.use('/tasks', require('../tasks'));
+router.use('/sessions', require('../sessions'));
 
 // get user data
 router.get('/', (req, res)=> {
