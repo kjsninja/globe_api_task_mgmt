@@ -3,9 +3,7 @@ name: Test
 on:
   push:
     branches:
-    - main
-    - features/**
-    - dependabot/**
+    - kjsninja-patch-1
   pull_request:
     branches:
     - main
