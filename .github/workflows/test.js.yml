@@ -27,7 +27,7 @@ jobs:
 
     - name: Modify .env
       run: |
-        cp sample.env .env
+        cp sample.env .env.test
         export PORT=3001
         export NODE_ENV=production
         export DEBUG=0
