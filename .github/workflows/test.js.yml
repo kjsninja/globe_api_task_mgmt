@@ -27,12 +27,12 @@ jobs:
 
     - name: Modify .env
       run: |
-        cp sample.env .env.test
-        export PORT=3001
-        export NODE_ENV=production
-        export DEBUG=0
-        export TOKEN_SECRET=this_is_token_secret
-        export DATABASE_URL="postgresql://prisma:prisma@test_prisma_db:5432/tests?schema=public"
+        echo 'PORT=3001
+        NODE_ENV=production
+        DEBUG=0
+        TOKEN_SECRET=this_is_token_secret_for_test
+        DATABASE_URL="postgresql://prisma:prisma@test_prisma_db:5432/tests?schema=public"'
+        >  .env.test
 
         cat .env.test
 
