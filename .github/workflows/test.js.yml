@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+    branches:
+    - main
+    - features/**
+    - dependabot/**
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 22.13.0
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Modify .env
+      run: |
+        cp sample.env .env
+        export PORT=3001
+        export NODE_ENV=production
+        export DEBUG=0
+        export TOKEN_SECRET=this_is_token_secret
+        export DATABASE_URL="postgresql://prisma:prisma@test_prisma_db:5432/tests?schema=public"
+
+        cat .env
+
+#    - name: Stop containers
+#      if: always()
+#      run: docker-compose -f "docker-compose.yml" down
