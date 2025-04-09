@@ -72,4 +72,6 @@ describe('POST /api/auth', () => {
       throw new Error(validate.error);
     }
   });
+
+  after(async () => {});
 });

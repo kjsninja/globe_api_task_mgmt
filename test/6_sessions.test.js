@@ -40,6 +40,9 @@ describe('GET /api/me/sessions', () => {
     }
     sessionId = meResult.body[0].id;
   });
+
+  after(async () => {});
+  
 });
 
 describe('GET /api/me/sessions/:sessionId', () => {
@@ -78,4 +81,6 @@ describe('GET /api/me/sessions/:sessionId', () => {
     if (meResult.status !== 400) throw new Error(`Expected status 400, got ${meResult.status}`)
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
+
+  after(async () => {});
 });

@@ -22,4 +22,6 @@ describe('GET /404', () => {
       throw new Error(validate.error);
     }
   });
+
+  after(async () => {});
 });

@@ -68,4 +68,6 @@ describe('POST /api/signup', () => {
       throw new Error(validate.error);
     }
   });
+
+  after(async () => {});
 });
