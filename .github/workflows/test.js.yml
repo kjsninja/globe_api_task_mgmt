@@ -16,20 +16,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-
-    - name: Install node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 22.13.0
-
-    - name: Install dependencies
-      run: npm install
-
+      
     - name: Run Test
+      if: always()
       run: |
         npm run docker:test:up
-    
-
-#    - name: Stop containers
-#      if: always()
-#      run: docker-compose -f "docker-compose.yml" down
