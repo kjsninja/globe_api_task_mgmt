@@ -20,13 +20,16 @@ services:
       - /bin/sh
       - -c
       - |
-        PORT=3001
+        echo 'PORT=3001
         NODE_ENV=production
         DEBUG=0
         
         TOKEN_SECRET=this_is_token_secret
         
-        DATABASE_URL="postgresql://prisma:prisma@test_prisma_db:5432/tests?schema=public"
+        DATABASE_URL="postgresql://prisma:prisma@test_prisma_db:5432/tests?schema=public"' > .env
+
+        cat .env
+        
         npm install
         npm run migrate
         npm run test
