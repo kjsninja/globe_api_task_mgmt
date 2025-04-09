@@ -1,0 +1,709 @@
+swagger: '2.0'
+info:
+  contact: {}
+  title: Globe Tasks API
+  version: 1.0.0
+basePath: "/api"
+paths:
+  /auth:
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              email:
+                example: Zoe95@gmail.com
+                type: string
+              password:
+                example: P@ssw0rd1
+                type: string
+            type: object
+      responses:
+        '200':
+          description: 200 SUCCESS
+          
+          schema:
+            properties:
+              token:
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBmNTIxMWI3LTkzNmEtNDNlMC1iMWQxLTJmYjRiNzMxZjdiNiIsImlhdCI6MTc0NDEyODc4MSwiZXhwIjoxNzQ0MTMyMzgxfQ.NPwpjjQxJJcbJqyY3J6_Jftc2aYk5qby3yr1QNi7Wpk
+                type: string
+            type: object
+        '401':
+          description: 400 Invalid email or password
+          
+          schema:
+            properties:
+              message:
+                example: Invalid email or password
+                type: string
+            type: object
+      tags:
+        - Account
+      description: Login
+      operationId: login
+      summary: Login
+  /me:
+    delete:
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              message:
+                example: User deleted
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Delete Profile
+      operationId: deleteProfile
+      summary: Delete Profile
+    get:
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              email:
+                example: Cali75@hotmail.com
+                type: string
+              name:
+                example: Liliana.Gorczany23
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Get Profile
+      operationId: getProfile
+      summary: Get Profile
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              name:
+                example: Kenstersss
+                type: string
+            type: object
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              data:
+                properties:
+                  name:
+                    example: Kenstersss
+                    type: string
+                type: object
+              message:
+                example: Update successful
+                type: string
+            type: object
+        '400':
+          description: 400 Bad Request
+          
+          schema:
+            properties:
+              error:
+                example: '"name" length must be at least 2 characters long'
+                type: string
+              field:
+                example: name
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Update Profile
+      operationId: updateProfile
+      summary: Update Profile
+  /me/sessions:
+    get:
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            example:
+              - createdAt: '2025-04-08T15:38:54.680Z'
+                id: 652e406f-63f9-499c-87dd-9a9932a871ec
+                metadata:
+                  agent: PostmanRuntime/7.43.2
+              - createdAt: '2025-04-08T16:15:57.366Z'
+                id: 7dacc622-efa8-4c12-9fa7-8cadf4fd3169
+                metadata:
+                  agent: PostmanRuntime/7.43.2
+              - createdAt: '2025-04-08T16:13:01.729Z'
+                id: 0f5211b7-936a-43e0-b1d1-2fb4b731f7b6
+                metadata:
+                  agent: PostmanRuntime/7.43.2
+            items:
+              properties:
+                createdAt:
+                  example: '2025-04-08T15:38:54.680Z'
+                  type: string
+                id:
+                  example: 652e406f-63f9-499c-87dd-9a9932a871ec
+                  type: string
+                metadata:
+                  properties:
+                    agent:
+                      example: PostmanRuntime/7.43.2
+                      type: string
+                  type: object
+              type: object
+            type: array
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Get User Sessions
+      operationId: getUserSessions
+      summary: Get User Sessions
+  /me/sessions/{session_id}:
+    parameters:
+      - in: path
+        name: session_id
+        required: true
+        type: string
+    delete:
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              createdAt:
+                example: '2025-04-08T16:24:09.398Z'
+                type: string
+              id:
+                example: 617035a4-a4d0-40d9-969c-739cb90731fe
+                type: string
+              metadata:
+                properties:
+                  agent:
+                    example: PostmanRuntime/7.43.2
+                    type: string
+                type: object
+            type: object
+        '400':
+          description: '400 Bad Request: Invalid Params'
+          
+          schema:
+            properties:
+              error:
+                example: '"value" must be a valid GUID'
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Delete Session By Id
+      operationId: deleteSessionById
+      summary: Delete Session By Id
+    get:
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              createdAt:
+                example: '2025-04-08T15:38:54.680Z'
+                type: string
+              id:
+                example: 652e406f-63f9-499c-87dd-9a9932a871ec
+                type: string
+              metadata:
+                properties:
+                  agent:
+                    example: PostmanRuntime/7.43.2
+                    type: string
+                type: object
+            type: object
+        '400':
+          description: '400 Bad Request: Invalid Params'
+          
+          schema:
+            properties:
+              error:
+                example: '"value" must be a valid GUID'
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Get User Session By Id
+      operationId: getUserSessionById
+      summary: Get User Session By Id
+  /me/tasks:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            example:
+              - content: This is a task
+                createdAt: '2025-04-08T14:15:51.002Z'
+                id: 27591934-6d3c-4373-9e2a-c88497a077b4
+                status: PENDING
+                title: Task Title
+                updatedAt: '2025-04-08T14:15:51.002Z'
+            items:
+              properties:
+                content:
+                  example: This is a task
+                  type: string
+                createdAt:
+                  example: '2025-04-08T14:15:51.002Z'
+                  type: string
+                id:
+                  example: 27591934-6d3c-4373-9e2a-c88497a077b4
+                  type: string
+                status:
+                  example: PENDING
+                  type: string
+                title:
+                  example: Task Title
+                  type: string
+                updatedAt:
+                  example: '2025-04-08T14:15:51.002Z'
+                  type: string
+              type: object
+            type: array
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Tasks
+      description: Get My Tasks
+      operationId: getMyTasks
+      summary: Get My Tasks
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              content:
+                example: This is a task
+                type: string
+              title:
+                example: Task Title
+                type: string
+            type: object
+      responses:
+        '201':
+          description: 201 Success
+          
+          schema:
+            properties:
+              content:
+                example: This is a task
+                type: string
+              createdAt:
+                example: '2025-04-08T16:26:27.874Z'
+                type: string
+              id:
+                example: 0ea22fe4-94bd-4ca3-9331-08f3275189ee
+                type: string
+              status:
+                example: PENDING
+                type: string
+              title:
+                example: Task Title
+                type: string
+              updatedAt:
+                example: '2025-04-08T16:26:27.874Z'
+                type: string
+            type: object
+        '400':
+          description: 400 Bad Request
+          
+          schema:
+            properties:
+              error:
+                example: '"title1" is not allowed'
+                type: string
+              field:
+                example: title1
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Tasks
+      description: Create Task
+      operationId: createTask
+      summary: Create Task
+  /me/tasks/{task_id}:
+    parameters:
+      - in: path
+        name: task_id
+        required: true
+        type: string
+    delete:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: 400 Bad Request
+          
+          schema:
+            properties:
+              error:
+                properties:
+                  message:
+                    example: Record to delete does not exist.
+                    type: string
+                type: object
+            type: object
+        '400':
+          description: '400 Bad Request: Invalid Params'
+          
+          schema:
+            properties:
+              error:
+                example: '"value" must be a valid GUID'
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Tasks
+      description: Delete Task By Id
+      operationId: deleteTaskById
+      summary: Delete Task By Id
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              content:
+                example: tseting
+                type: string
+              createdAt:
+                example: '2025-04-08T16:26:27.874Z'
+                type: string
+              id:
+                example: 0ea22fe4-94bd-4ca3-9331-08f3275189ee
+                type: string
+              status:
+                example: PENDING
+                type: string
+              title:
+                example: Task Title
+                type: string
+              updatedAt:
+                example: '2025-04-08T16:27:22.478Z'
+                type: string
+            type: object
+        '400':
+          description: '400 Bad Request: Invalid Params'
+          
+          schema:
+            properties:
+              error:
+                example: '"value" must be a valid GUID'
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Tasks
+      description: Get Task By Id
+      operationId: getTaskById
+      summary: Get Task By Id
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              content:
+                example: This is a task
+                type: string
+              status:
+                example: COMPLETED
+                type: string
+              title:
+                example: Task Title
+                type: string
+            type: object
+      responses:
+        '200':
+          description: 200 Success
+          
+          schema:
+            properties:
+              content:
+                example: tseting
+                type: string
+              createdAt:
+                example: '2025-04-08T16:26:27.874Z'
+                type: string
+              id:
+                example: 0ea22fe4-94bd-4ca3-9331-08f3275189ee
+                type: string
+              status:
+                example: PENDING
+                type: string
+              title:
+                example: Task Title
+                type: string
+              updatedAt:
+                example: '2025-04-08T16:27:22.478Z'
+                type: string
+            type: object
+        '400':
+          description: '400 Bad Request: Invalid Params'
+          
+          schema:
+            properties:
+              error:
+                example: '"value" must be a valid GUID'
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Tasks
+      description: Update Task by Id
+      operationId: updateTaskById
+      summary: Update Task by Id
+  /signup:
+    post:
+      consumes:
+        - application/json
+      produces:
+        - text/plain
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              email:
+                example: ken@gmail.com
+                type: string
+              name:
+                example: Kenster2
+                type: string
+              password:
+                example: P@ssw0rd1
+                type: string
+            type: object
+      responses:
+        '201':
+          description: 201 Created
+          
+        '400':
+          description: 400 Bad Request
+          
+          schema:
+            properties:
+              error:
+                example: '"email1" is not allowed'
+                type: string
+              field:
+                example: email1
+                type: string
+              message:
+                example: Bad Request
+                type: string
+            type: object
+      tags:
+        - Account
+      description: Signup
+      operationId: signup
+      summary: Signup
+tags:
+  - name: Account
+  - name: Me
+  - name: Tasks
