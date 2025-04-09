@@ -1,9 +1,9 @@
-name: Test
+name: Run Test in Github Action
 
 on:
   push:
     branches:
-    - kjsninja-patch-1
+    - main
   pull_request:
     branches:
     - main
