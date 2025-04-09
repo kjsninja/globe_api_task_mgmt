@@ -16,8 +16,6 @@ services:
     build:
       context: .
       target: test
-    env_file:
-      - .env.test
     command:
       - /bin/sh
       - -c
