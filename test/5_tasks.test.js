@@ -118,3 +118,97 @@ describe('PUT /api/me/tasks/:id', async () => {
     if(meResult.body.status !== dummyTaskUpdate.status) throw new Error(`Expected ${dummyTaskUpdate.status}, got ${meResult.body.status}.`);
   });
 });
+
+describe('GET /api/me/tasks', async () => {
+  it('should be able to get 401 when wrong token', async () => {
+    const meResult = await request(app).get(`/api/me/tasks`).set('Authorization', `Bearer `)
+    // Check status code
+    if (meResult.status !== 401) throw new Error(`Expected status 401, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+  });
+
+  it('should be able to get all task in array', async () => {
+    const meResult = await request(app).get(`/api/me/tasks`).set('Authorization', `Bearer ${myToken}`)
+    // Check status code
+    if (meResult.status !== 200) throw new Error(`Expected status 200, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+
+    const responseObject = joi.array().items(
+      joi.object({
+        id: joi.string().guid().required(),
+        title: joi.string().required(),
+        content: joi.string().required(),
+        createdAt: joi.string().required(),
+        updatedAt: joi.string().required(),
+        status: joi.string().valid(TaskStatus.COMPLETED, TaskStatus.PENDING).required()
+      })
+    )
+
+    const validate = responseObject.validate(meResult.body);
+    if(validate.error){
+      throw new Error(validate.error);
+    }
+  });
+});
+
+describe('GET /api/me/tasks/:taskid', async () => {
+  it('should be able to get 401 when wrong token', async () => {
+    const meResult = await request(app).get(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer `)
+    // Check status code
+    if (meResult.status !== 401) throw new Error(`Expected status 401, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+  });
+
+  it('should be able to get task', async () => {
+    const meResult = await request(app).get(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer ${myToken}`)
+    // Check status code
+    if (meResult.status !== 200) throw new Error(`Expected status 200, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+
+    const responseObject = joi.object({
+      id: joi.string().guid().required(),
+      title: joi.string().required(),
+      content: joi.string().required(),
+      createdAt: joi.string().required(),
+      updatedAt: joi.string().required(),
+      status: joi.string().valid(TaskStatus.COMPLETED, TaskStatus.PENDING).required()
+    })
+
+    const validate = responseObject.validate(meResult.body);
+    if(validate.error){
+      throw new Error(validate.error);
+    }
+  });
+
+  it('should not be able to get task with wrong task id', async () => {
+    const meResult = await request(app).get(`/api/me/tasks/1`).set('Authorization', `Bearer ${myToken}`)
+    // Check status code
+    if (meResult.status !== 400) throw new Error(`Expected status 400, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+  });
+
+});
+
+describe('DEL /api/me/tasks/:taskid', async () => {
+  it('should be able to get 401 when wrong token', async () => {
+    const meResult = await request(app).del(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer `)
+    // Check status code
+    if (meResult.status !== 401) throw new Error(`Expected status 401, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+  });
+
+  it('should be able to delete the task', async () => {
+    const meResult = await request(app).del(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer ${myToken}`)
+    // Check status code
+    if (meResult.status !== 200) throw new Error(`Expected status 200, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+  });
+
+  it('should not be able to delete task with wrong task id', async () => {
+    const meResult = await request(app).del(`/api/me/tasks/1`).set('Authorization', `Bearer ${myToken}`)
+    // Check status code
+    if (meResult.status !== 400) throw new Error(`Expected status 400, got ${meResult.status}`)
+    if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
+  });
+
+});
