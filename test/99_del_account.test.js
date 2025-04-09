@@ -22,3 +22,5 @@ describe('DEL /api/me', () => {
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
 });
+
+process.exit(1);
