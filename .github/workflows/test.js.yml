@@ -1,0 +1,24 @@
+name: Run Test in Github Action
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+      
+    - name: Run Test
+      continue-on-error: false
+      run: |
+        npm run docker:test:up
+        echo "Success"

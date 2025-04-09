@@ -33,6 +33,8 @@ describe('POST /api/me', () => {
     if (meResult.status !== 401) throw new Error(`Expected status 401, got ${meResult.status}`)
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
+
+  after(async () => {});
 });
 
 describe('PUT /api/me', () => {
@@ -54,4 +56,6 @@ describe('PUT /api/me', () => {
 
     if(meResult.body.data.name !== name) throw new Error(`Expected ${name}, got ${meResult.body.data.name}.`);
   });
+
+  after(async () => {});
 });

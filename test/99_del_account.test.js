@@ -21,4 +21,7 @@ describe('DEL /api/me', () => {
     if (meResult.status !== 200) throw new Error(`Expected status 200, got ${meResult.status}`)
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
+
+  after(async () => {});
+  
 });

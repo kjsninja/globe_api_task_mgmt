@@ -65,6 +65,9 @@ describe('POST /api/me/tasks', () => {
     if (meResult.status !== 401) throw new Error(`Expected status 401, got ${meResult.status}`)
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
+
+  after(async () => {});
+  
 });
 
 describe('PUT /api/me/tasks/:id', () => {
@@ -117,6 +120,8 @@ describe('PUT /api/me/tasks/:id', () => {
     if(meResult.body.content !== dummyTaskUpdate.content) throw new Error(`Expected ${dummyTaskUpdate.content}, got ${meResult.body.content}.`);
     if(meResult.body.status !== dummyTaskUpdate.status) throw new Error(`Expected ${dummyTaskUpdate.status}, got ${meResult.body.status}.`);
   });
+
+  after(async () => {});
 });
 
 describe('GET /api/me/tasks', () => {
@@ -149,6 +154,8 @@ describe('GET /api/me/tasks', () => {
       throw new Error(validate.error);
     }
   });
+
+  after(async () => {});
 });
 
 describe('GET /api/me/tasks/:taskid', () => {
@@ -187,6 +194,8 @@ describe('GET /api/me/tasks/:taskid', () => {
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
 
+  after(async () => {});
+
 });
 
 describe('DEL /api/me/tasks/:taskid', () => {
@@ -210,5 +219,7 @@ describe('DEL /api/me/tasks/:taskid', () => {
     if (meResult.status !== 400) throw new Error(`Expected status 400, got ${meResult.status}`)
     if (typeof meResult.body !== 'object') throw new Error(`Response is not an object.`);
   });
+
+  after(async () => {});
 
 });
