@@ -4,7 +4,7 @@ const joi = require('joi');
 
 const { dummyAccount } = require('./creds');
 
-describe('POST /api/signup', async () => {
+describe('POST /api/signup', () => {
   it('should return 201 status if success', async () => {
     const res = await request(app).post('/api/signup').send(dummyAccount);
     // Check status code

@@ -6,7 +6,7 @@ const { credential } = require('./creds');
 
 let myToken = "";
 
-describe('POST /api/me', async () => {
+describe('POST /api/me', () => {
   it('should be able to access the route', async () => {
     const auth = await request(app).post('/api/auth').send(credential.correct).expect(200)
     myToken = auth.body.token;
@@ -35,7 +35,7 @@ describe('POST /api/me', async () => {
   });
 });
 
-describe('PUT /api/me', async () => {
+describe('PUT /api/me', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).put('/api/me').set('Authorization', `Bearer `)
     // Check status code

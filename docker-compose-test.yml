@@ -1,0 +1,29 @@
+# Set the version of docker compose to use
+version: '3.9'
+
+# The containers that compose the project
+services:
+  test_prisma_db:
+    image: postgres:13
+    container_name: test_prisma_db
+    ports:
+      - 5432
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: tests
+  test_core_api:
+    build:
+      context: .
+      target: test
+    env_file:
+      - .env.test
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm install
+        npm run migrate
+        npm run test
+    depends_on:
+      - test_prisma_db

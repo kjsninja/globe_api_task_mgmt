@@ -7,10 +7,15 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "npx mocha",
-    "migrate": "npx prisma migrate dev",
-    "db:seed": "node seed/index.js"
+    "migrate": "npx prisma migrate deploy",
+    "db:seed": "node seed/index.js",
+    "docker:test:up": "docker compose -f docker-compose-test.yml up  --remove-orphans --abort-on-container-failure",
+    "docker:test:down": "docker compose -f docker-compose-test.yml down",
+    "docker:up": "docker compose up -d  --remove-orphans",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",

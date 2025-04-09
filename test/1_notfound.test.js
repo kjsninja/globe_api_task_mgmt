@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../app')
 const joi = require('joi');
 
-describe('GET /404', async () => {
+describe('GET /404', () => {
   it('should return 404 message', async () => {
     const res = await request(app).get('/404')
 

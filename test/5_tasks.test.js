@@ -14,7 +14,7 @@ const dummyTaskUpdate = {
   status: TaskStatus.COMPLETED
 }
 
-describe('POST /api/me/tasks', async () => {
+describe('POST /api/me/tasks', () => {
   it('should be able to create a task', async () => {
     const auth = await request(app).post('/api/auth').send(credential.correct).expect(200)
     myToken = auth.body.token;
@@ -67,7 +67,7 @@ describe('POST /api/me/tasks', async () => {
   });
 });
 
-describe('PUT /api/me/tasks/:id', async () => {
+describe('PUT /api/me/tasks/:id', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).put(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer `)
     // Check status code
@@ -119,7 +119,7 @@ describe('PUT /api/me/tasks/:id', async () => {
   });
 });
 
-describe('GET /api/me/tasks', async () => {
+describe('GET /api/me/tasks', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).get(`/api/me/tasks`).set('Authorization', `Bearer `)
     // Check status code
@@ -151,7 +151,7 @@ describe('GET /api/me/tasks', async () => {
   });
 });
 
-describe('GET /api/me/tasks/:taskid', async () => {
+describe('GET /api/me/tasks/:taskid', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).get(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer `)
     // Check status code
@@ -189,7 +189,7 @@ describe('GET /api/me/tasks/:taskid', async () => {
 
 });
 
-describe('DEL /api/me/tasks/:taskid', async () => {
+describe('DEL /api/me/tasks/:taskid', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).del(`/api/me/tasks/${taskId}`).set('Authorization', `Bearer `)
     // Check status code

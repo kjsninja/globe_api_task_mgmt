@@ -4,7 +4,7 @@ const joi = require('joi');
 
 const { credential } = require('./creds');
 
-describe('DEL /api/me', async () => {
+describe('DEL /api/me', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).del('/api/me').set('Authorization', `Bearer `)
     // Check status code

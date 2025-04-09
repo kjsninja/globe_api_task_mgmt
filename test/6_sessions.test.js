@@ -7,7 +7,7 @@ const { credential } = require('./creds');
 let myToken = "";
 let sessionId = "";
 
-describe('GET /api/me/sessions', async () => {
+describe('GET /api/me/sessions', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).get(`/api/me/sessions`).set('Authorization', `Bearer `)
     // Check status code
@@ -42,7 +42,7 @@ describe('GET /api/me/sessions', async () => {
   });
 });
 
-describe('GET /api/me/sessions/:sessionId', async () => {
+describe('GET /api/me/sessions/:sessionId', () => {
   it('should be able to get 401 when wrong token', async () => {
     const meResult = await request(app).get(`/api/me/sessions/${sessionId}`).set('Authorization', `Bearer `)
     // Check status code

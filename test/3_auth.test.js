@@ -4,7 +4,7 @@ const joi = require('joi');
 
 const { credential } = require('./creds');
 
-describe('POST /api/auth', async () => {
+describe('POST /api/auth', () => {
   it('should be able to login', async () => {
     const res = await request(app).post('/api/auth').send(credential.correct)
 
