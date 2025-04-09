@@ -36,6 +36,10 @@ jobs:
 
         cat .env
 
+    - name: Run Test
+      run: npm run docker:test:up
+    
+
 #    - name: Stop containers
 #      if: always()
 #      run: docker-compose -f "docker-compose.yml" down
