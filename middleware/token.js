@@ -4,7 +4,7 @@ const User = require('../models/Users');
 module.exports = {
     isValidToken : async (req, res, next)=>{
         if(!req.headers.authorization){
-            res.status(401).send({
+            return res.status(401).send({
                 message: 'Unauthorize'
             })
         }

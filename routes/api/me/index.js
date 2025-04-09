@@ -8,6 +8,16 @@ const { checkBlankBody } = require('../common-dto')
 router.use('/tasks', require('../tasks'));
 router.use('/sessions', require('../sessions'));
 
+// check credentials here
+router.post('/logout', async (req, res)=> {
+  const result = await User.deleteUserSessionById(res.locals.token.id, res.locals.user.id);
+  if(result.error) 
+    return res.status(401).send({
+      message: 'Unauthorized'
+    })
+  res.status(200).send();
+});
+
 // get user data
 router.get('/', (req, res)=> {
   const user = res.locals.user;

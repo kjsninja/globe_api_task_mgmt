@@ -6,7 +6,7 @@
 ### References
 
 Check the swagger here [swagger](docs/swagger.yml)<br>
-Check the postman collection here [postman](https://documenter.getpostman.com/view/2987353/2sB2cX7L82)<br>
+Check the postman collection here [postman](https://documenter.getpostman.com/view/2987353/2sB2cX91ky)<br>
 
 ### Prerequisite
 

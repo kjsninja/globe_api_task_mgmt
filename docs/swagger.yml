@@ -1,9 +1,9 @@
 swagger: '2.0'
+host: localhost:3000
 info:
-  contact: {}
-  title: Globe Tasks API
+  title: Task Management
   version: 1.0.0
-basePath: "/api"
+basePath: /api
 paths:
   /auth:
     post:
@@ -47,6 +47,36 @@ paths:
       description: Login
       operationId: login
       summary: Login
+  /auth/validate:
+    post:
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Account
+      description: Validate Token
+      operationId: validateToken
+      summary: Validate Token
   /me:
     delete:
       consumes:
@@ -180,6 +210,37 @@ paths:
       description: Update Profile
       operationId: updateProfile
       summary: Update Profile
+  /me/logout:
+    post:
+      consumes:
+        - text/plain
+      produces:
+        - text/plain
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            format: binary
+            type: string
+      responses:
+        '200':
+          description: 200 Success
+          
+        '401':
+          description: 401 Unauthorized
+          
+          schema:
+            properties:
+              message:
+                example: Token expired or invalid
+                type: string
+            type: object
+      tags:
+        - Me
+      description: Logout
+      operationId: logout
+      summary: Logout
   /me/sessions:
     get:
       consumes:
@@ -682,7 +743,7 @@ paths:
       responses:
         '201':
           description: 201 Created
-          
+
         '400':
           description: 400 Bad Request
           
