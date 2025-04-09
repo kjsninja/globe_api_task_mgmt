@@ -18,5 +18,7 @@ jobs:
       uses: actions/checkout@v1
       
     - name: Run Test
+      continue-on-error: false
       run: |
         npm run docker:test:up
+        echo "Success"
