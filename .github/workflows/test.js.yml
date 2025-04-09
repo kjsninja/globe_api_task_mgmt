@@ -27,15 +27,6 @@ jobs:
 
     - name: Run Test
       run: |
-        echo 'PORT=3001
-        NODE_ENV=production
-        DEBUG=0
-        TOKEN_SECRET=this_is_token_secret_for_test
-        DATABASE_URL="postgresql://prisma:prisma@test_prisma_db:5432/tests?schema=public"'
-        >  .env.test
-        
-        cat .env.test
-        
         npm run docker:test:up
     
 
