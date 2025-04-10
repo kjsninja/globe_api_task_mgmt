@@ -10,7 +10,7 @@ Check the postman collection here [postman](https://documenter.getpostman.com/vi
 
 ### Prerequisite
 
-1. You need to have latest node at least version `v22.13.0` above.
+1. You need to have latest node at least version `v22.13.0` or above.
 2. You need to have `postgresql` installed
 3. (***Optional***) If you want to run docker setup, you need to have docker `version 28.0.1` or above
 
