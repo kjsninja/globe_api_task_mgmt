@@ -25,6 +25,7 @@ model UserSession {
   user_id   User     @relation(fields: [owner], references: [id], onDelete: Cascade)
 
   @@index([owner])
+  @@index([createdAt(sort: Desc)])
 }
 
 model Task {
@@ -39,6 +40,7 @@ model Task {
 
   @@index([id, owner])
   @@index([owner])
+  @@index([updatedAt(sort: Desc)])
 }
 
 enum TaskStatus {
