@@ -62,6 +62,9 @@ class Tasks{
 
   async getAllTaskByOwner(owner){
     return await prisma.task.findMany({
+      orderBy: {
+        updatedAt: 'desc'
+      },
       where: {
         owner
       }
