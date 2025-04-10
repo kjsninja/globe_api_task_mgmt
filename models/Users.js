@@ -56,6 +56,9 @@ class Users{
 
   async getAllUserSessions(owner){
     return await prisma.userSession.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      },
       where: {
         owner
       }
