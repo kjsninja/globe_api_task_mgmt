@@ -1,6 +1,7 @@
 const joi = require('joi');
 const { joiValidate } = require('../../../helper/requestValidator');
 const { TaskStatus } = require('@prisma/client');
+const sanitize = require('../../../helper/sanitize');
 
 const CreateTaskDTO = joi.object({
   title: joi.string().min(1).max(50),
@@ -14,12 +15,12 @@ const UpdateTaskDTO = joi.object({
 });
 
 const checkCreateRequest = function(req, res, next){
-  const validate = CreateTaskDTO.validate(req.body);
+  const validate = CreateTaskDTO.validate(sanitize.trim(req.body));
   joiValidate(validate, req, res, next);
 }
 
 const checkUpdateRequest = function(req, res, next){
-  const validate = UpdateTaskDTO.validate(req.body);
+  const validate = UpdateTaskDTO.validate(sanitize.trim(req.body));
   joiValidate(validate, req, res, next);
 }
 

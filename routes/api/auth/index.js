@@ -4,10 +4,11 @@ const user = require('../../../models/Users');
 const { checkLoginRequest } = require('./dto');
 const { checkBlankBody } = require('../common-dto');
 const { isValidToken } = require('../../../middleware/token');
+const sanitize = require('../../../helper/sanitize');
 
 // check credentials here
 router.post('/', [checkBlankBody, checkLoginRequest], async (req, res)=> {
-  const result = await user.getUserByEmailPassword(req.body, res.locals.userAgent);
+  const result = await user.getUserByEmailPassword(sanitize.trim(req.body), res.locals.userAgent);
   if(result == null) return res.status(401).send({
     message: 'Invalid email or password'
   })

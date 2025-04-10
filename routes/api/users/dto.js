@@ -1,5 +1,6 @@
 const joi = require('joi');
 const { joiValidate } = require('../../../helper/requestValidator')
+const sanitize = require('../../../helper/sanitize');
 
 const CreateUserDTO = joi.object({
   email: joi.string().email().max(100),
@@ -35,12 +36,12 @@ const UpdateUserDTO = joi.object({
 });
 
 const checkCreateRequest = function(req, res, next){
-  const validate = CreateUserDTO.validate(req.body);
+  const validate = CreateUserDTO.validate(sanitize.trim(req.body));
   joiValidate(validate, req, res, next);
 }
 
 const checkUpdateRequest = function(req, res, next){
-  const validate = UpdateUserDTO.validate(req.body);
+  const validate = UpdateUserDTO.validate(sanitize.trim(req.body));
   joiValidate(validate, req, res, next);
 }
 

@@ -3,10 +3,11 @@ const router = express.Router();
 const Tasks = require('../../../models/Tasks')
 const { checkCreateRequest, checkUpdateRequest } = require('./dto')
 const { checkUUIDparams, checkBlankBody } = require('../common-dto')
+const sanitize = require('../../../helper/sanitize');
 
 // create
 router.post('/', checkCreateRequest, async (req, res)=> {
-  const results = await Tasks.create({...req.body, owner: res.locals.user.id});
+  const results = await Tasks.create({...sanitize.trim(req.body), owner: res.locals.user.id});
   if(results.error) res.status(400);
   else delete results.owner
   res.status(201).send(results)
@@ -23,7 +24,7 @@ router.get('/', async(req, res)=> {
 
 // get specific tasks by id
 router.get('/:id', checkUUIDparams, async (req, res)=> {
-  const task = await Tasks.getTaskById(req.params.id, res.locals.user.id);
+  const task = await Tasks.getTaskById(sanitize.trim(req.params.id), res.locals.user.id);
   if(task==null){
     res.status(400).send({
       message: 'No task found'
@@ -36,13 +37,13 @@ router.get('/:id', checkUUIDparams, async (req, res)=> {
 
 // delete task by id
 router.delete('/:id', checkUUIDparams, async(req, res)=> {
-  const result = await Tasks.deleteTaskById(req.params.id, res.locals.user.id);
+  const result = await Tasks.deleteTaskById(sanitize.trim(req.params.id), res.locals.user.id);
   res.send(result)
 });
 
 // update tasks by id
 router.put('/:id', [checkUUIDparams, checkBlankBody, checkUpdateRequest], async (req, res)=> {
-  const result = await Tasks.updateTask(req.params.id, res.locals.user.id, req.body);
+  const result = await Tasks.updateTask(sanitize.trim(req.params.id), res.locals.user.id, sanitize.trim(req.body));
   if(result.error) res.status(400);
   delete result.owner;
   res.send(result)

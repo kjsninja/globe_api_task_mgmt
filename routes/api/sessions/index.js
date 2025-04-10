@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const User = require('../../../models/Users');
 const { checkUUIDparams } = require('../common-dto')
+const sanitize = require('../../../helper/sanitize');
 
 router.get('/', async (req, res)=> {
   const sessions = await User.getAllUserSessions(res.locals.user.id)
@@ -13,13 +14,13 @@ router.get('/', async (req, res)=> {
 });
 
 router.get('/:id', checkUUIDparams, async (req, res)=> {
-  const session = await User.getUserSessionByIdAndOwner(req.params.id, res.locals.user.id)
+  const session = await User.getUserSessionByIdAndOwner(sanitize.trim(req.params.id), res.locals.user.id)
   if(session.error) res.status(400);
   res.send(session);
 });
 
 router.delete('/:id', checkUUIDparams, async (req, res)=> {
-  const session = await User.deleteUserSessionById(req.params.id, res.locals.user.id)
+  const session = await User.deleteUserSessionById(sanitize.trim(req.params.id), res.locals.user.id)
   if(session.error) res.status(400);
   res.send(session);
 });

@@ -3,6 +3,7 @@ const router = express.Router({mergeParams: true});
 const User = require('../../../models/Users');
 const { checkUpdateRequest } = require('../users/dto')
 const { checkBlankBody } = require('../common-dto')
+const sanitize = require('../../../helper/sanitize');
 
 // other routes
 router.use('/tasks', require('../tasks'));
@@ -42,7 +43,7 @@ router.delete('/', async (req, res)=> {
 
 // update tasks by id
 router.put('/', [checkBlankBody, checkUpdateRequest], async (req, res) => {
-  const result = await User.updateUser(res.locals.user.id, req.body);
+  const result = await User.updateUser(res.locals.user.id, sanitize.trim(req.body));
   if(result.error){
     return res.status(400).send({
       message: 'Bad Request',

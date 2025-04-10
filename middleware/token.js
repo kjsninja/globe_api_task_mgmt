@@ -1,5 +1,6 @@
 const JWT = require('../helper/jwt');
 const User = require('../models/Users');
+const sanitize = require('../helper/sanitize');
 
 module.exports = {
     isValidToken : async (req, res, next)=>{
@@ -18,8 +19,8 @@ module.exports = {
                         message: "Token expired or invalid"
                     })
                 }
-                res.locals.token = verify
-                res.locals.user = user;
+                res.locals.token = sanitize.trim(verify)
+                res.locals.user = sanitize.trim(user);
                 next();
             }else{
                 res.status(401).send({
